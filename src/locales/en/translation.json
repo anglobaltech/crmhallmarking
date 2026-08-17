@@ -1,0 +1,21 @@
+{
+  "sidebar": {
+    "dashboard": "Dashboard",
+    "services": "Services",
+    "workflow": "Workflow",
+    "finance": "Finance",
+    "compliance": "Compliance",
+    "operations": "Operations",
+    "settings": "Settings",
+    "portals": "Portals"
+  },
+  "dashboard": {
+    "title": "Centre Dashboard",
+    "totalArticles": "Total Articles Intake",
+    "dailyRevenue": "Daily Revenue",
+    "pendingItems": "Pending Items",
+    "activeReminders": "Active Reminders",
+    "todaysActivity": "Today's Activity Breakdown",
+    "dailyReport": "Generate Daily Report"
+  }
+}
