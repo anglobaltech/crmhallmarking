@@ -173,8 +173,8 @@ export default function Login({ onLogin }) {
         text: 'Your Hallmarking Centre has been successfully registered. You can now log in.',
         icon: 'success',
         confirmButtonColor: '#d4af37',
-        background: 'var(--card-bg)',
-        color: 'var(--text1)'
+        background: '#ffffff',
+        color: '#333333'
       });
       
       setActiveTab('login');
@@ -280,7 +280,7 @@ export default function Login({ onLogin }) {
             
             <div style={{ position: 'relative', margin: '20px 0', textAlign: 'center' }}>
               <hr style={{ border: 'none', borderTop: '1px solid var(--border)' }} />
-              <span style={{ position: 'absolute', top: '-10px', left: '50%', transform: 'translateX(-50%)', background: 'var(--card-bg)', padding: '0 10px', color: 'var(--text3)', fontSize: '12px' }}>OR</span>
+              <span style={{ position: 'absolute', top: '-10px', left: '50%', transform: 'translateX(-50%)', background: '#ffffff', padding: '0 10px', color: 'var(--text3)', fontSize: '12px' }}>OR</span>
             </div>
 
             <button 
