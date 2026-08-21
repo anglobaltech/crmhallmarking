@@ -90,11 +90,15 @@ export default function Login({ onLogin }) {
         gst_number: res.data.user.gst_number
       });
     } catch (err) {
-      if (err.response && err.response.data) {
-        setError(err.response.data.error || 'Login failed');
-      } else {
-        setError('Network error');
-      }
+      const errorMsg = err.message || 'Login failed. Please check your credentials.';
+      Swal.fire({
+        title: 'Login Failed',
+        text: errorMsg,
+        icon: 'error',
+        confirmButtonColor: '#d4af37',
+        background: '#ffffff',
+        color: '#333333'
+      });
     } finally {
       setLoading(false);
     }
@@ -276,27 +280,6 @@ export default function Login({ onLogin }) {
             
             <button type="submit" className="btn btn-gold" style={{ width: '100%', padding: '12px', display: 'flex', justifyContent: 'center' }} disabled={loading}>
               {loading ? 'Authenticating...' : 'Sign In'}
-            </button>
-            
-            <div style={{ position: 'relative', margin: '20px 0', textAlign: 'center' }}>
-              <hr style={{ border: 'none', borderTop: '1px solid var(--border)' }} />
-              <span style={{ position: 'absolute', top: '-10px', left: '50%', transform: 'translateX(-50%)', background: '#ffffff', padding: '0 10px', color: 'var(--text3)', fontSize: '12px' }}>OR</span>
-            </div>
-
-            <button 
-              type="button" 
-              className="btn btn-outline" 
-              style={{ width: '100%', padding: '12px', display: 'flex', justifyContent: 'center', borderColor: 'var(--gold)', color: 'var(--gold)' }}
-              onClick={(e) => {
-                setIdentifier('Admin Delhi');
-                setPassword('1234');
-                setTimeout(() => {
-                  document.querySelector('form').dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
-                }, 100);
-              }}
-              disabled={loading}
-            >
-              <i className="ti ti-bolt" style={{ marginRight: '8px' }}></i> Dummy Login
             </button>
           </form>
         )}

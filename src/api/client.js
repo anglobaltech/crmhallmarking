@@ -30,7 +30,9 @@ client.interceptors.response.use(
       // Token expired or invalid
       localStorage.removeItem('token');
       localStorage.removeItem('user');
-      window.location.href = '/login'; // Redirect to login page
+      if (window.location.pathname !== '/login' && window.location.pathname !== '/') {
+        window.location.href = '/login'; // Redirect to login page
+      }
     }
     const message = error.response?.data?.error || error.response?.data?.message || error.message || 'Network error';
     return Promise.reject(new Error(message));
