@@ -12,6 +12,7 @@ export default function Articles({ setPage, globalEdit, setGlobalEdit }) {
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [viewingJob, setViewingJob] = useState(null);
   const [editingJob, setEditingJob] = useState(null);
+  const [isSavingEdit, setIsSavingEdit] = useState(false);
 
   useEffect(() => {
     if (globalEdit?.id && globalEdit?.type === 'Article Intake' && articles.length > 0) {
@@ -52,6 +53,8 @@ export default function Articles({ setPage, globalEdit, setGlobalEdit }) {
   }, [activeDropdown]);
 
   const handleSaveEdit = async () => {
+    if (!editingJob) return;
+    setIsSavingEdit(true);
     try {
       await client.put(`/workflow/articles/${editingJob.id}`, editingJob);
       toast('Article updated successfully', 'success');
@@ -60,6 +63,8 @@ export default function Articles({ setPage, globalEdit, setGlobalEdit }) {
     } catch (err) {
       console.error('Failed to update article', err);
       toast('Error updating', 'error');
+    } finally {
+      setIsSavingEdit(false);
     }
   };
 
@@ -211,6 +216,7 @@ export default function Articles({ setPage, globalEdit, setGlobalEdit }) {
               <div><strong>Declared Purity:</strong> {viewingJob.declared_purity || 'N/A'}</div>
               <div><strong>Weight:</strong> {viewingJob.weight || viewingJob.gross_weight || 'N/A'}</div>
               <div><strong>Quantity (Pieces):</strong> {viewingJob.pieces || viewingJob.quantity || 'N/A'}</div>
+              <div><strong>Priority:</strong> {viewingJob.priority || 'N/A'}</div>
               <div><strong>Remarks:</strong> {viewingJob.remarks || 'N/A'}</div>
               <div><strong>Date:</strong> {new Date(viewingJob.created_at || new Date()).toLocaleString('en-IN')}</div>
               <div><strong>Status:</strong> {viewingJob.status || 'Pending'}</div>
@@ -303,7 +309,9 @@ export default function Articles({ setPage, globalEdit, setGlobalEdit }) {
             </div>
             <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'flex-end', gap: '10px' }}>
               <button className="btn btn-outline" onClick={() => setEditingJob(null)}>Cancel</button>
-              <button className="btn btn-gold" onClick={handleSaveEdit}>Save Changes</button>
+              <button className="btn btn-gold" onClick={handleSaveEdit} disabled={isSavingEdit}>
+                {isSavingEdit ? 'Saving...' : 'Save Changes'}
+              </button>
             </div>
           </div>
         </div>

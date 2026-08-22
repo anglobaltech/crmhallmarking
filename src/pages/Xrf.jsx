@@ -41,6 +41,7 @@ export default function Xrf({ setPage, globalEdit, setGlobalEdit }) {
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [viewingJob, setViewingJob] = useState(null);
   const [editingJob, setEditingJob] = useState(null);
+  const [isSavingEdit, setIsSavingEdit] = useState(false);
   const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
@@ -55,6 +56,7 @@ export default function Xrf({ setPage, globalEdit, setGlobalEdit }) {
 
   const handleSaveEdit = async () => {
     if (!editingJob) return;
+    setIsSavingEdit(true);
     try {
       await client.put(`/services/xrf/${editingJob.id}`, editingJob);
       toast('XRF result updated successfully', 'success');
@@ -63,6 +65,8 @@ export default function Xrf({ setPage, globalEdit, setGlobalEdit }) {
     } catch (err) {
       console.error(err);
       toast('Failed to update result', 'error');
+    } finally {
+      setIsSavingEdit(false);
     }
   };
 
@@ -200,7 +204,8 @@ export default function Xrf({ setPage, globalEdit, setGlobalEdit }) {
           copper_pct: art.cu,
           zinc_pct: art.zn,
           result: art.result,
-          remarks: art.remarks
+          remarks: art.remarks,
+          priority: art.priority
         });
       }));
       
@@ -579,6 +584,7 @@ export default function Xrf({ setPage, globalEdit, setGlobalEdit }) {
               <div><strong>Declared Purity:</strong> {viewingJob.declared_purity || 'N/A'}</div>
               <div><strong>Weight:</strong> {viewingJob.weight || 'N/A'}</div>
               <div><strong>Quantity (Pieces):</strong> {viewingJob.pieces || 'N/A'}</div>
+              <div><strong>Priority:</strong> {viewingJob.priority || 'N/A'}</div>
               <div><strong>Machine:</strong> {viewingJob.machine || 'N/A'}</div>
               <div><strong>Gold (Au) %:</strong> {viewingJob.gold_pct}%</div>
               <div><strong>Silver (Ag) %:</strong> {viewingJob.silver_pct || 0}%</div>
@@ -713,7 +719,9 @@ export default function Xrf({ setPage, globalEdit, setGlobalEdit }) {
             
             <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'flex-end', gap: '10px' }}>
               <button className="btn btn-outline" onClick={() => setEditingJob(null)}>Cancel</button>
-              <button className="btn btn-gold" onClick={handleSaveEdit}>Save Changes</button>
+              <button className="btn btn-gold" onClick={handleSaveEdit} disabled={isSavingEdit}>
+                {isSavingEdit ? 'Saving...' : 'Save Changes'}
+              </button>
             </div>
           </div>
         </div>

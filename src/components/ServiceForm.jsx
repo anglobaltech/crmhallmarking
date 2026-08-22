@@ -23,6 +23,8 @@ export default function ServiceForm({ title, icon, onSubmit, loading, extraField
   const [weightUnit, setWeightUnit] = useState('g');
   
   const [recentJobs, setRecentJobs] = useState([]);
+  const [loadingState, setLoading] = useState(false);
+  const [isSavingEdit, setIsSavingEdit] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalJobs, setTotalJobs] = useState(0);
   const [searchQuery, setSearchQuery] = useState('');
@@ -44,6 +46,7 @@ export default function ServiceForm({ title, icon, onSubmit, loading, extraField
 
   const handleSaveEdit = async () => {
     if (!endpoint || !editingJob) return;
+    setIsSavingEdit(true);
     try {
       await client.put(`${endpoint}/${editingJob.id}`, editingJob);
       toast('Service job updated successfully', 'success');
@@ -52,6 +55,8 @@ export default function ServiceForm({ title, icon, onSubmit, loading, extraField
     } catch (err) {
       console.error(err);
       toast('Failed to update job', 'error');
+    } finally {
+      setIsSavingEdit(false);
     }
   };
 
@@ -660,7 +665,9 @@ export default function ServiceForm({ title, icon, onSubmit, loading, extraField
             
             <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'flex-end', gap: '10px' }}>
               <button className="btn btn-outline" onClick={() => setEditingJob(null)}>Cancel</button>
-              <button className="btn btn-gold" onClick={handleSaveEdit}>Save Changes</button>
+              <button className="btn btn-gold" onClick={handleSaveEdit} disabled={isSavingEdit}>
+                {isSavingEdit ? 'Saving...' : 'Save Changes'}
+              </button>
             </div>
           </div>
         </div>

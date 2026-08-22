@@ -185,6 +185,34 @@ export default function Dashboard({ setPage, globalEdit, setGlobalEdit }) {
     return ['Pending', 'In Progress', 'Completed', 'Rejected'];
   };
 
+  const handleViewJob = async (activity) => {
+    try {
+      let endpoint = '';
+      switch (activity.type) {
+        case 'Article Intake': endpoint = `/workflow/articles/${activity.id}`; break;
+        case 'Laser Cutting': endpoint = `/services/laser/${activity.id}`; break;
+        case 'XRF Test': endpoint = `/services/xrf/${activity.id}`; break;
+        case 'Soldering': endpoint = `/services/soldering/${activity.id}`; break;
+        case 'Fire Assay': endpoint = `/services/fire/${activity.id}`; break;
+        case 'Gold Exchange': endpoint = `/services/exchange/${activity.id}`; break;
+        default: break;
+      }
+      
+      if (!endpoint) {
+        setViewingJob(activity);
+        return;
+      }
+      
+      const res = await client.get(endpoint);
+      const fullJob = { ...activity, ...res.data };
+      setViewingJob(fullJob);
+    } catch (err) {
+      console.error('Failed to load full job details', err);
+      // Fallback to basic activity data
+      setViewingJob(activity);
+    }
+  };
+
   const getStatusBadge = (status) => {
     if (['Pass', 'Completed', 'Delivered'].includes(status)) return 'badge-green';
     if (['Fail'].includes(status)) return 'badge-red';
@@ -346,8 +374,22 @@ export default function Dashboard({ setPage, globalEdit, setGlobalEdit }) {
                           </button>
                           
                           {activeDropdown === rowId && (
-                            <div style={{ position: 'absolute', right: '40px', top: '10px', backgroundColor: '#fff', border: '1px solid var(--border)', borderRadius: '4px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)', zIndex: 10, display: 'flex', flexDirection: 'column', minWidth: '100px', textAlign: 'left' }}>
-                              <div style={{ padding: '8px 12px', cursor: 'pointer', borderBottom: '1px solid var(--border)', fontSize: '13px' }} onClick={() => { setViewingJob(activity); setActiveDropdown(null); }}>
+                            <div style={{ 
+                              position: 'absolute', 
+                              right: '40px', 
+                              top: idx >= recentActivities.length - 2 && recentActivities.length > 3 ? 'auto' : '10px',
+                              bottom: idx >= recentActivities.length - 2 && recentActivities.length > 3 ? '10px' : 'auto',
+                              backgroundColor: '#fff', 
+                              border: '1px solid var(--border)', 
+                              borderRadius: '4px', 
+                              boxShadow: '0 4px 12px rgba(0,0,0,0.1)', 
+                              zIndex: 10, 
+                              display: 'flex', 
+                              flexDirection: 'column', 
+                              minWidth: '100px', 
+                              textAlign: 'left' 
+                            }}>
+                              <div style={{ padding: '8px 12px', cursor: 'pointer', borderBottom: '1px solid var(--border)', fontSize: '13px' }} onClick={() => { handleViewJob(activity); setActiveDropdown(null); }}>
                                 <i className="ti ti-eye" style={{ marginRight: '6px' }}></i> View
                               </div>
                               <div style={{ padding: '8px 12px', cursor: 'pointer', borderBottom: '1px solid var(--border)', fontSize: '13px' }} onClick={() => { 
@@ -478,6 +520,7 @@ export default function Dashboard({ setPage, globalEdit, setGlobalEdit }) {
               <div><strong>Declared Purity:</strong> {viewingJob.purity || viewingJob.declared_purity || 'N/A'}</div>
               <div><strong>Weight:</strong> {viewingJob.weight || viewingJob.gross_weight || viewingJob.sample_weight || 'N/A'}</div>
               <div><strong>Quantity (Pieces):</strong> {viewingJob.pieces || viewingJob.quantity || 'N/A'}</div>
+              <div><strong>Priority:</strong> {viewingJob.priority || 'N/A'}</div>
               <div><strong>Remarks:</strong> {viewingJob.remarks || 'N/A'}</div>
               <div className="divider"></div>
               <div><strong>Date:</strong> {new Date(viewingJob.created_at || new Date()).toLocaleString('en-IN')}</div>

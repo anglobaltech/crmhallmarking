@@ -4,6 +4,7 @@ import TopBar from './components/TopBar';
 import DeskNav from './components/DeskNav';
 import Sidebar from './components/Sidebar';
 import ToastContainer from './components/Toast';
+import Footer from './components/Footer';
 
 import Dashboard from './pages/Dashboard';
 import Intake from './pages/Intake';
@@ -41,9 +42,14 @@ const deskDefaultPage = {
 };
 
 export default function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [userContext, setUserContext] = useState(null);
-  const [isLocked, setIsLocked] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    return localStorage.getItem('token') ? true : false;
+  });
+  const [userContext, setUserContext] = useState(() => {
+    const saved = localStorage.getItem('user_context');
+    return saved ? JSON.parse(saved) : null;
+  });
+  const [isLocked, setIsLocked] = useState(false);
   const [currentDesk, setCurrentDesk] = useState('reception');
   const [currentPage, setCurrentPage] = useState('dashboard');
   const [globalEdit, setGlobalEdit] = useState(null);
@@ -52,6 +58,14 @@ export default function App() {
     setUserContext(userData);
     setIsAuthenticated(true);
     setIsLocked(false);
+    localStorage.setItem('user_context', JSON.stringify(userData));
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user_context');
+    setIsAuthenticated(false);
+    setUserContext(null);
   };
 
   const handleDeskChange = (desk) => {
@@ -95,8 +109,7 @@ export default function App() {
 
   return (
     <>
-      <LockOverlay isLocked={isLocked} onUnlock={() => setIsLocked(false)} />
-      <TopBar setLocked={setIsLocked} setPage={setCurrentPage} userContext={userContext} />
+      <TopBar setLocked={setIsLocked} setPage={setCurrentPage} userContext={userContext} onLogout={handleLogout} />
       <DeskNav currentDesk={currentDesk} onDeskChange={handleDeskChange} userContext={userContext} />
       
       <div id="main">
@@ -105,8 +118,11 @@ export default function App() {
           currentPage={currentPage} 
           setPage={setCurrentPage} 
         />
-        <div id="content">
-          {renderPage()}
+        <div id="content" style={{ display: 'flex', flexDirection: 'column' }}>
+          <div style={{ flex: 1 }}>
+            {renderPage()}
+          </div>
+          <Footer />
         </div>
       </div>
       <ToastContainer />

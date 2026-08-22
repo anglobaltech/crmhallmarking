@@ -86,7 +86,7 @@ export default function TopBar({ setLocked, setPage, userContext, onLogout }) {
         </div>
         
         <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-          <div style={{ fontSize: '16px', fontWeight: 700, letterSpacing: '0.3px', color: '#fff', textTransform: 'lowercase' }}>
+          <div style={{ fontSize: '16px', fontWeight: 700, letterSpacing: '0.3px', color: '#fff' }}>
             {tenantName}
           </div>
           <div style={{ fontSize: '11px', color: '#9AB', marginTop: '2px' }}>
@@ -227,7 +227,22 @@ export default function TopBar({ setLocked, setPage, userContext, onLogout }) {
                   style={{ width: '100%', justifyContent: 'flex-start', background: 'var(--red-light)', color: 'var(--red)', border: 'none', padding: '8px 12px' }}
                   onClick={() => {
                     setShowProfileMenu(false);
-                    if (onLogout) onLogout();
+                    Swal.fire({
+                      title: 'Are you sure?',
+                      text: 'You will be logged out of your session.',
+                      icon: 'warning',
+                      showCancelButton: true,
+                      confirmButtonColor: 'var(--red)',
+                      cancelButtonColor: '#9AB',
+                      confirmButtonText: 'Yes, log me out',
+                      customClass: {
+                        popup: 'swal-premium-popup'
+                      }
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        if (onLogout) onLogout();
+                      }
+                    });
                   }}
                 >
                   <i className="ti ti-logout" style={{ marginRight: '8px' }}></i> Log out

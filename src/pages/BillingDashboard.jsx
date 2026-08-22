@@ -11,6 +11,7 @@ export default function BillingDashboard({ userContext }) {
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [viewingInvoice, setViewingInvoice] = useState(null);
   const [editingInvoice, setEditingInvoice] = useState(null);
+  const [isSavingEdit, setIsSavingEdit] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   
   // Modals for actions
@@ -110,6 +111,7 @@ export default function BillingDashboard({ userContext }) {
   };
 
   const handleSaveEdit = async () => {
+    setIsSavingEdit(true);
     try {
       await client.put(`/billing/invoices/${editingInvoice.id}`, {
         customer_name: editingInvoice.customer_name,
@@ -124,6 +126,8 @@ export default function BillingDashboard({ userContext }) {
     } catch (err) {
       console.error('Failed to update invoice', err);
       alert('Error updating invoice');
+    } finally {
+      setIsSavingEdit(false);
     }
   };
 
@@ -447,7 +451,9 @@ export default function BillingDashboard({ userContext }) {
             </div>
             <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'flex-end', gap: '10px' }}>
               <button className="btn btn-outline" onClick={() => setEditingInvoice(null)}>Cancel</button>
-              <button className="btn btn-gold" onClick={handleSaveEdit}>Save Changes</button>
+              <button className="btn btn-gold" onClick={handleSaveEdit} disabled={isSavingEdit}>
+                {isSavingEdit ? 'Saving...' : 'Save Changes'}
+              </button>
             </div>
           </div>
         </div>

@@ -4,6 +4,7 @@ import toast from 'react-hot-toast';
 
 export default function EditActivityModal({ activity, onClose, onSave }) {
   const [job, setJob] = useState(null);
+  const [isSavingEdit, setIsSavingEdit] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -44,6 +45,7 @@ export default function EditActivityModal({ activity, onClose, onSave }) {
       default: break;
     }
 
+    setIsSavingEdit(true);
     try {
       await client.put(endpoint, job);
       toast('Updated successfully', 'success');
@@ -51,6 +53,8 @@ export default function EditActivityModal({ activity, onClose, onSave }) {
     } catch (err) {
       console.error(err);
       toast('Failed to update', 'error');
+    } finally {
+      setIsSavingEdit(false);
     }
   };
 
@@ -141,7 +145,9 @@ export default function EditActivityModal({ activity, onClose, onSave }) {
 
         <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'flex-end', gap: '10px' }}>
           <button className="btn btn-outline" onClick={onClose}>Cancel</button>
-          <button className="btn btn-primary" onClick={handleSave}>Save Changes</button>
+          <button className="btn btn-primary" onClick={handleSave} disabled={isSavingEdit}>
+            {isSavingEdit ? 'Saving...' : 'Save Changes'}
+          </button>
         </div>
       </div>
     </div>

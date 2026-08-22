@@ -79,6 +79,17 @@ export default function Login({ onLogin }) {
 
       localStorage.setItem('token', res.data.token);
       
+      Swal.fire({
+        title: 'Welcome Back!',
+        text: `Successfully logged in as ${res.data.user.name}`,
+        icon: 'success',
+        timer: 1500,
+        showConfirmButton: false,
+        background: '#ffffff',
+        color: '#333333',
+        backdrop: `rgba(0,0,0,0.4)`
+      });
+      
       onLogin({ 
         username: res.data.user.name, 
         tenantId: res.data.user.tenant_id, 
