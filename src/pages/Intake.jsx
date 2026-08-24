@@ -5,6 +5,8 @@ import { toast } from '../components/Toast';
 export default function Intake({ setPage }) {
   const [hmcName, setHmcName] = useState('');
   const [licenseNo, setLicenseNo] = useState('');
+  const [gstin, setGstin] = useState('');
+  const [address, setAddress] = useState('');
   const [custMobile, setCustMobile] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -101,6 +103,8 @@ export default function Intake({ setPage }) {
         customer_name: hmcName,
         customer_id: licenseNo,
         customer_mobile: custMobile,
+        gstin: gstin,
+        address: address,
         articles: articlesToSave
       };
       const res = await client.post('/workflow/orders', payload);
@@ -113,6 +117,8 @@ export default function Intake({ setPage }) {
       
       setHmcName('');
       setLicenseNo('');
+      setGstin('');
+      setAddress('');
       setCustMobile('');
       setDateOfReceipt('');
       setArticles([]);
@@ -148,21 +154,29 @@ export default function Intake({ setPage }) {
             <label>License Number of shop</label>
             <input type="text" placeholder="e.g. LIC-1234" value={licenseNo} onChange={e => setLicenseNo(e.target.value)} />
           </div>
-          <div className="form-group">
-            <label>Mobile Number</label>
-            <div style={{ display: 'flex' }}>
-              <div style={{ padding: '8px 12px', background: '#F8F7F4', border: '1px solid var(--border)', borderRight: 'none', borderRadius: '4px 0 0 4px', color: '#666', display: 'flex', alignItems: 'center', fontSize: '13px' }}>+91</div>
-              <input type="tel" value={custMobile} onChange={e => {
-                const val = e.target.value.replace(/\D/g, '');
-                if (val.length <= 10) setCustMobile(val);
-              }} style={{ borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }} placeholder="10-digit mobile" />
+            <div className="form-group">
+              <label>Mobile Number</label>
+              <div style={{ display: 'flex' }}>
+                <div style={{ padding: '8px 12px', background: '#F8F7F4', border: '1px solid var(--border)', borderRight: 'none', borderRadius: '4px 0 0 4px', color: '#666', display: 'flex', alignItems: 'center', fontSize: '13px' }}>+91</div>
+                <input type="tel" placeholder="10-digit mobile" value={custMobile} onChange={e => {
+                  const val = e.target.value.replace(/\D/g, '');
+                  if (val.length <= 10) setCustMobile(val);
+                }} style={{ borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }} />
+              </div>
+            </div>
+            <div className="form-group">
+              <label>Date of Receipt</label>
+              <input type="date" value={dateOfReceipt} onChange={e => setDateOfReceipt(e.target.value)} />
+            </div>
+            <div className="form-group">
+              <label>GSTIN Number</label>
+              <input type="text" placeholder="e.g. 22AAAAA0000A1Z5" value={gstin} onChange={e => setGstin(e.target.value)} />
+            </div>
+            <div className="form-group">
+              <label>Address</label>
+              <input type="text" placeholder="Enter complete address" value={address} onChange={e => setAddress(e.target.value)} />
             </div>
           </div>
-          <div className="form-group">
-            <label>Date of Receipt</label>
-            <input type="date" value={dateOfReceipt} onChange={e => setDateOfReceipt(e.target.value)} />
-          </div>
-        </div>
         
         <div className="divider"></div>
 

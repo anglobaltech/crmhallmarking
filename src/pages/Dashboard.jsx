@@ -508,24 +508,47 @@ export default function Dashboard({ setPage, globalEdit, setGlobalEdit }) {
               <div className="card-title">Activity Details</div>
               <button className="btn btn-outline btn-sm" onClick={() => setViewingJob(null)}><i className="ti ti-x"></i></button>
             </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginTop: '16px' }}>
-              <div><strong>Service:</strong> {viewingJob.type || 'N/A'}</div>
-              <div><strong>Customer Name:</strong> {viewingJob.jeweller_name || 'N/A'}</div>
-              <div><strong>Mobile:</strong> {viewingJob.phone || 'N/A'}</div>
-              <div><strong>GST/License:</strong> {viewingJob.gst_number || viewingJob.bis_license || viewingJob.gstin || 'N/A'}</div>
-              <div><strong>Address:</strong> {viewingJob.address || 'N/A'}</div>
-              <div className="divider"></div>
-              <div><strong>Article Type:</strong> {viewingJob.article_type || 'N/A'}</div>
-              <div><strong>Metal:</strong> {viewingJob.metal || viewingJob.material || 'N/A'}</div>
-              <div><strong>Declared Purity:</strong> {viewingJob.purity || viewingJob.declared_purity || 'N/A'}</div>
-              <div><strong>Weight:</strong> {viewingJob.weight || viewingJob.gross_weight || viewingJob.sample_weight || 'N/A'}</div>
-              <div><strong>Quantity (Pieces):</strong> {viewingJob.pieces || viewingJob.quantity || 'N/A'}</div>
-              <div><strong>Priority:</strong> {viewingJob.priority || 'N/A'}</div>
-              <div><strong>Remarks:</strong> {viewingJob.remarks || 'N/A'}</div>
-              <div className="divider"></div>
-              <div><strong>Date:</strong> {new Date(viewingJob.created_at || new Date()).toLocaleString('en-IN')}</div>
-              <div><strong>Status:</strong> {viewingJob.status || 'Pending'}</div>
-            </div>
+            {viewingJob.type === 'XRF Test' ? (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginTop: '16px' }}>
+                <div><strong>Customer Name:</strong> {viewingJob.jeweller_name || 'N/A'}</div>
+                <div><strong>Mobile:</strong> {viewingJob.phone || 'N/A'}</div>
+                <div><strong>GST/License:</strong> {viewingJob.bis_license || 'N/A'}</div>
+                <div><strong>Address:</strong> {viewingJob.address || 'N/A'}</div>
+                <div className="divider"></div>
+                <div><strong>Article Type:</strong> {viewingJob.article_type || 'N/A'}</div>
+                <div><strong>Declared Purity:</strong> {viewingJob.declared_purity || 'N/A'}</div>
+                <div><strong>Weight:</strong> {viewingJob.weight || 'N/A'}</div>
+                <div><strong>Quantity (Pieces):</strong> {viewingJob.pieces || 'N/A'}</div>
+                <div><strong>Priority:</strong> {viewingJob.priority || 'N/A'}</div>
+                <div><strong>Machine:</strong> {viewingJob.machine || 'N/A'}</div>
+                <div><strong>Gold (Au) %:</strong> {viewingJob.gold_pct ? `${viewingJob.gold_pct}%` : '0.00%'}</div>
+                <div><strong>Silver (Ag) %:</strong> {viewingJob.silver_pct ? `${viewingJob.silver_pct}%` : '0.00%'}</div>
+                <div><strong>Copper (Cu) %:</strong> {viewingJob.copper_pct ? `${viewingJob.copper_pct}%` : '0.00%'}</div>
+                <div><strong>Zinc (Zn) %:</strong> {viewingJob.zinc_pct ? `${viewingJob.zinc_pct}%` : '0.00%'}</div>
+                <div><strong>Result:</strong> {viewingJob.result || viewingJob.status || 'Pending'}</div>
+                <div><strong>Remarks:</strong> {viewingJob.remarks || 'N/A'}</div>
+                <div><strong>Date:</strong> {new Date(viewingJob.created_at || new Date()).toLocaleString('en-IN')}</div>
+              </div>
+            ) : (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginTop: '16px' }}>
+                <div><strong>Service:</strong> {viewingJob.type || 'N/A'}</div>
+                <div><strong>Customer Name:</strong> {viewingJob.jeweller_name || 'N/A'}</div>
+                <div><strong>Mobile:</strong> {viewingJob.phone || 'N/A'}</div>
+                <div><strong>GST/License:</strong> {viewingJob.gst_number || viewingJob.bis_license || viewingJob.gstin || 'N/A'}</div>
+                <div><strong>Address:</strong> {viewingJob.address || 'N/A'}</div>
+                <div className="divider"></div>
+                <div><strong>Article Type:</strong> {viewingJob.article_type || 'N/A'}</div>
+                <div><strong>Metal:</strong> {viewingJob.metal || viewingJob.material || 'N/A'}</div>
+                <div><strong>Declared Purity:</strong> {viewingJob.purity || viewingJob.declared_purity || 'N/A'}</div>
+                <div><strong>Weight:</strong> {viewingJob.weight || viewingJob.gross_weight || viewingJob.sample_weight || 'N/A'}</div>
+                <div><strong>Quantity (Pieces):</strong> {viewingJob.pieces || viewingJob.quantity || 'N/A'}</div>
+                <div><strong>Priority:</strong> {viewingJob.priority || 'N/A'}</div>
+                <div><strong>Remarks:</strong> {viewingJob.remarks || 'N/A'}</div>
+                <div className="divider"></div>
+                <div><strong>Date:</strong> {new Date(viewingJob.created_at || new Date()).toLocaleString('en-IN')}</div>
+                <div><strong>Status:</strong> {viewingJob.status || 'Pending'}</div>
+              </div>
+            )}
           </div>
         </div>
       )}

@@ -4,7 +4,7 @@ export default function Footer() {
   return (
     <div style={{
       marginTop: '20px',
-      padding: '12px 20px',
+      padding: '16px 20px',
       textAlign: 'center',
       borderTop: '1px solid var(--border)',
       background: 'linear-gradient(to right, rgba(248, 247, 244, 0.2), rgba(220, 165, 55, 0.08), rgba(248, 247, 244, 0.2))',
@@ -16,11 +16,11 @@ export default function Footer() {
       gap: '6px',
       borderRadius: '8px',
     }}>
-      <div style={{ fontWeight: 500, letterSpacing: '0.3px', color: '#555', marginBottom: '8px' }}>
+      <div style={{ fontWeight: 500, letterSpacing: '0.3px', color: '#555', marginBottom: '4px' }}>
         Designed and developed by
       </div>
-      <img src="/company-logo.png" alt="A N Global Services Logo" style={{ height: '54px', objectFit: 'contain', marginBottom: '6px' }} />
-      <div style={{ fontSize: '12px', color: '#999', marginTop: '4px' }}>
+      <img src="/company-logo.png" alt="A N Global Services Logo" style={{ height: '46px', objectFit: 'contain', marginBottom: '4px' }} />
+      <div style={{ fontSize: '12px', color: '#999', marginTop: '2px' }}>
         &copy; {new Date().getFullYear()} All Rights Reserved. A complete industrial solution provider.
       </div>
     </div>

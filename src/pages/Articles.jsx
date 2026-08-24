@@ -208,7 +208,7 @@ export default function Articles({ setPage, globalEdit, setGlobalEdit }) {
               <div><strong>S.No.:</strong> {articles.findIndex(a => a.id === viewingJob.id) + 1}</div>
               <div><strong>Customer Name:</strong> {viewingJob.customer_name || 'N/A'}</div>
               <div><strong>Mobile:</strong> {viewingJob.phone || 'N/A'}</div>
-              <div><strong>GST/License:</strong> {viewingJob.gst_number || viewingJob.gstin || 'N/A'}</div>
+              <div><strong>GST/License:</strong> {viewingJob.gst_number || viewingJob.bis_license || viewingJob.gstin || 'N/A'}</div>
               <div><strong>Address:</strong> {viewingJob.address || 'N/A'}</div>
               <div className="divider"></div>
               <div><strong>Article Type:</strong> {viewingJob.article_type || 'N/A'}</div>
