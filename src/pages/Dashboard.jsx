@@ -519,6 +519,9 @@ export default function Dashboard({ setPage, globalEdit, setGlobalEdit }) {
                 <div><strong>Declared Purity:</strong> {viewingJob.declared_purity || 'N/A'}</div>
                 <div><strong>Weight:</strong> {viewingJob.weight || 'N/A'}</div>
                 <div><strong>Quantity (Pieces):</strong> {viewingJob.pieces || 'N/A'}</div>
+                <div><strong>Job Card:</strong> {viewingJob.job_card || 'N/A'}</div>
+                <div><strong>Request Number:</strong> {viewingJob.request_number || 'N/A'}</div>
+                <div><strong>Receipt Number:</strong> {viewingJob.receipt_number || 'N/A'}</div>
                 <div><strong>Priority:</strong> {viewingJob.priority || 'N/A'}</div>
                 <div><strong>Machine:</strong> {viewingJob.machine || 'N/A'}</div>
                 <div><strong>Gold (Au) %:</strong> {viewingJob.gold_pct ? `${viewingJob.gold_pct}%` : '0.00%'}</div>
@@ -542,6 +545,9 @@ export default function Dashboard({ setPage, globalEdit, setGlobalEdit }) {
                 <div><strong>Declared Purity:</strong> {viewingJob.purity || viewingJob.declared_purity || 'N/A'}</div>
                 <div><strong>Weight:</strong> {viewingJob.weight || viewingJob.gross_weight || viewingJob.sample_weight || 'N/A'}</div>
                 <div><strong>Quantity (Pieces):</strong> {viewingJob.pieces || viewingJob.quantity || 'N/A'}</div>
+                <div><strong>Job Card:</strong> {viewingJob.job_card || 'N/A'}</div>
+                <div><strong>Request Number:</strong> {viewingJob.request_number || 'N/A'}</div>
+                <div><strong>Receipt Number:</strong> {viewingJob.receipt_number || 'N/A'}</div>
                 <div><strong>Priority:</strong> {viewingJob.priority || 'N/A'}</div>
                 <div><strong>Remarks:</strong> {viewingJob.remarks || 'N/A'}</div>
                 <div className="divider"></div>

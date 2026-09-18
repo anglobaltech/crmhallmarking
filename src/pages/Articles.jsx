@@ -216,6 +216,9 @@ export default function Articles({ setPage, globalEdit, setGlobalEdit }) {
               <div><strong>Declared Purity:</strong> {viewingJob.declared_purity || 'N/A'}</div>
               <div><strong>Weight:</strong> {viewingJob.weight || viewingJob.gross_weight || 'N/A'}</div>
               <div><strong>Quantity (Pieces):</strong> {viewingJob.pieces || viewingJob.quantity || 'N/A'}</div>
+              <div><strong>Job Card:</strong> {viewingJob.job_card || 'N/A'}</div>
+              <div><strong>Request Number:</strong> {viewingJob.request_number || 'N/A'}</div>
+              <div><strong>Receipt Number:</strong> {viewingJob.receipt_number || 'N/A'}</div>
               <div><strong>Priority:</strong> {viewingJob.priority || 'N/A'}</div>
               <div><strong>Remarks:</strong> {viewingJob.remarks || 'N/A'}</div>
               <div><strong>Date:</strong> {new Date(viewingJob.created_at || new Date()).toLocaleString('en-IN')}</div>
@@ -258,6 +261,18 @@ export default function Articles({ setPage, globalEdit, setGlobalEdit }) {
               <div className="form-group full">
                 <label>Address</label>
                 <textarea value={editingJob.address || ''} onChange={e => setEditingJob({...editingJob, address: e.target.value})} />
+              </div>
+              <div className="form-group">
+                <label>Job Card</label>
+                <input type="text" value={editingJob.job_card || ''} onChange={e => setEditingJob({...editingJob, job_card: e.target.value})} />
+              </div>
+              <div className="form-group">
+                <label>Article Request Number</label>
+                <input type="text" value={editingJob.request_number || ''} onChange={e => setEditingJob({...editingJob, request_number: e.target.value})} />
+              </div>
+              <div className="form-group">
+                <label>Receipt Number</label>
+                <input type="text" value={editingJob.receipt_number || ''} onChange={e => setEditingJob({...editingJob, receipt_number: e.target.value})} />
               </div>
               <div className="form-group">
                 <label>Article Type</label>

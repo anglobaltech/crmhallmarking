@@ -8,6 +8,11 @@ export default function Intake({ setPage }) {
   const [gstin, setGstin] = useState('');
   const [address, setAddress] = useState('');
   const [custMobile, setCustMobile] = useState('');
+  
+  const [jobCard, setJobCard] = useState('');
+  const [requestNumber, setRequestNumber] = useState('');
+  const [receiptNumber, setReceiptNumber] = useState('');
+  
   const [loading, setLoading] = useState(false);
 
   const [articles, setArticles] = useState([]);
@@ -105,6 +110,9 @@ export default function Intake({ setPage }) {
         customer_mobile: custMobile,
         gstin: gstin,
         address: address,
+        job_card: jobCard,
+        request_number: requestNumber,
+        receipt_number: receiptNumber,
         articles: articlesToSave
       };
       const res = await client.post('/workflow/orders', payload);
@@ -121,6 +129,9 @@ export default function Intake({ setPage }) {
       setAddress('');
       setCustMobile('');
       setDateOfReceipt('');
+      setJobCard('');
+      setRequestNumber('');
+      setReceiptNumber('');
       setArticles([]);
       setArticleType('');
       setMetal('');
@@ -177,6 +188,24 @@ export default function Intake({ setPage }) {
               <input type="text" placeholder="Enter complete address" value={address} onChange={e => setAddress(e.target.value)} />
             </div>
           </div>
+        
+        <div className="divider"></div>
+
+        <div className="card-title" style={{ marginBottom: '14px' }}>Order Reference Details</div>
+        <div className="form-grid">
+          <div className="form-group">
+            <label>Job Card</label>
+            <input type="text" placeholder="Enter Job Card No" value={jobCard} onChange={e => setJobCard(e.target.value)} />
+          </div>
+          <div className="form-group">
+            <label>Article Request Number</label>
+            <input type="text" placeholder="Enter Request No" value={requestNumber} onChange={e => setRequestNumber(e.target.value)} />
+          </div>
+          <div className="form-group">
+            <label>Receipt Number</label>
+            <input type="text" placeholder="Enter Receipt No" value={receiptNumber} onChange={e => setReceiptNumber(e.target.value)} />
+          </div>
+        </div>
         
         <div className="divider"></div>
 
