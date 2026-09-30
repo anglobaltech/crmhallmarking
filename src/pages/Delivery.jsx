@@ -35,7 +35,7 @@ export default function Delivery() {
       setArtId('');
     } catch (err) {
       console.error(err);
-      alert('Error updating delivery status.');
+      alert('Error updating delivery status');
     } finally {
       setLoading(false);
     }
